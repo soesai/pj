@@ -25,10 +25,10 @@ function getAppTime(){
 
 function getPersonList(){
     let person = JS.getPerson()
-    let obj = JSON.parse(person)
+    //let obj = JSON.parse(person)
     //let pList = []
     //pList.push(person)
-    $('#captcha').val(obj.user_name)
+    $('#captcha').val(person)
     //return pList;
 }
 
