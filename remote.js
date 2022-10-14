@@ -14,13 +14,13 @@ var waitCount = 0
 function getAppDate(){
     let aDate = JS.getDate()
     $('#appdate').val(aDate)
-    return aDate
+    //return aDate
 }
 
 function getAppTime(){
     let aTime = JS.getTime()
     $('#captcha').val(aTime)
-    return aTime
+    //return aTime
 }
 
 function getPersonList(){
@@ -28,7 +28,7 @@ function getPersonList(){
     let pList = []
     pList.push(person)
     $('#captcha').val(JSON.stringify(pList))
-    return pList;
+    //return pList;
 }
 
 function getTime(startUp = "NO"){
