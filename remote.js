@@ -1,8 +1,8 @@
 var current_url = window.location.href
 
 var now = new Date();
-var h = 9;
-var m = 0;
+var h = 24;
+var m = 00;
 var millisTill10 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 0, 0) - now;
 if (millisTill10 < 0) {
      millisTill10 += 86400000;
@@ -25,10 +25,10 @@ function getAppTime(){
 
 function getPersonList(){
     let aPerson = JS.getPerson()
-    let obj = JSON.parse(person)
+    //let obj = JSON.parse(person)
     //let pList = []
     //pList.push(person)
-    $('#captcha').val(obj.user_name)
+    $('#captcha').val(JSON.stringify(aPerson))
     //return pList;
 }
 
