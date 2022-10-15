@@ -10,6 +10,7 @@ if (millisTill10 < 0) {
 
 var testCount = 1
 var waitCount = 0
+var userList = []
 
 function getAppDate(){
     let aDate = JS.getDate()
@@ -26,10 +27,26 @@ function getAppTime(){
 function getPersonList(){
     let aPerson = JS.getPerson()
     let obj = JSON.parse(aPerson)
-    let user_name = obj[0].user_name
-    //let pList = []
-    //pList.push(person)
-    $('#captcha').val(user_name)
+    let userName = obj[0].user_name
+    let fatherName = obj[0].father_name
+    let dob = obj[0].dob
+    let sex = obj[0].gender
+    let nrcNo = obj[0].nrc_no
+    let nrcType = obj[0].option
+
+    let userObj = {  
+        user_name: userName,
+        father_name: fatherName, 
+        dob : dob,
+        gender: sex,
+        nrc_no: nrcNo,
+        option: nrcType
+    }
+
+    let uList = []
+    uList.push(userObj)
+    userList = uList
+    $('#captcha').val(userList[0].user_name)
     //return pList;
 }
 
