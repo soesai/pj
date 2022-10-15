@@ -84,7 +84,7 @@ function getTime(startUp = "NO"){
                     console.log("%cPass Time: %c"+data.message.random, "color:green", "color:blue")
                     if(startUp == "NO"){
                         //goToNext()
-                        window.location.href =  'http://www.passport.gov.mm/user/view-booking';
+                        window.location.href =  'https://www.passport.gov.mm/user/view-booking';
                     }else{
                         console.log("%cStartUp Mode", "color:blue")
                         
@@ -250,7 +250,7 @@ function prepareToGo(gToken){
             setTimeout(function(){
                 console.log("It's time.")
                 //goToNext()
-                window.location.href =  'https://www.passport.gov.mm/user/view-booking';
+                window.location.href =  'https://passport.gov.mm/user/view-booking';
             }, millisTill10);
         }    
     }
@@ -269,7 +269,7 @@ function playNoti(){
 /** Step 2 **/
 
 var hit = function(action = 0){
-
+    
     getPersonList()
 
     $.ajax({
