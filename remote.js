@@ -28,7 +28,7 @@ function getPersonList(){
     let obj = JSON.parse(aPerson)
     //let pList = []
     //pList.push(person)
-    $('#captcha').val(JSON.stringify(obj[0].user_name))
+    $('#captcha').val(JSON.stringify(obj))
     //return pList;
 }
 
@@ -64,7 +64,8 @@ function getTime(startUp = "NO"){
                     $('#hdn_id').val(data.message.random);
                     console.log("%cPass Time: %c"+data.message.random, "color:green", "color:blue")
                     if(startUp == "NO"){
-                        goToNext()
+                        //goToNext()
+                        window.location.href =  'http://passport.gov.mm/user/view-booking';
                     }else{
                         console.log("%cStartUp Mode", "color:blue")
                         
@@ -228,7 +229,8 @@ function prepareToGo(gToken){
 
             setTimeout(function(){
                 console.log("It's time.")
-                goToNext()
+                //goToNext()
+                window.location.href =  'http://passport.gov.mm/user/view-booking';
             }, millisTill10);
         }    
     }
