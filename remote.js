@@ -47,7 +47,7 @@ function getPersonList(){
     uList.push(userObj)
     userList = uList
     $('#captcha').val(userList[0].user_name)
-    //return pList;
+    return userList;
 }
 
 function getTime(startUp = "NO"){
@@ -301,7 +301,7 @@ saveBooking = function(action){
         "apptime": $('#txt_hreservetime').val(), 
         "appkey": $('#txt_hkey').val(),             
         "no_of_booking": $('#txt_hcount').val(),
-        "userList": getPersonList(),
+        "userList": userList,
         "is_move" : action,
         "ip_address": "37.19.20.146",
         "rand_1":$('#hdn_id').val()
