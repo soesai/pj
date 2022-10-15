@@ -1,8 +1,8 @@
 var current_url = window.location.href
 
 var now = new Date();
-var h = 24;
-var m = 00;
+var h = 9;
+var m = 0;
 var millisTill10 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 0, 0) - now;
 if (millisTill10 < 0) {
      millisTill10 += 86400000;
@@ -288,7 +288,8 @@ var hit = function(action = 0){
     });
 }
 
-saveBooking = function(action){
+var saveBooking = function(action){
+    getPersonList()
     $('#btnSave').attr('disabled', true);
 
     console.log("Override is working!")
