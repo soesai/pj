@@ -15,13 +15,14 @@ var userList = []
 function getAppDate(){
     let aDate = JS.getDate()
     $('#appdate').val(aDate)
-    //return aDate
+    return aDate
+    //return "10-01-2023"
 }
 
 function getAppTime(){
     let aTime = JS.getTime()
     $('#captcha').val(aTime)
-    //return aTime
+    return aTime
 }
 
 function getPersonList(){
@@ -110,7 +111,7 @@ function getCfg(startUp = "NO"){
     $.ajax({
         type: "POST",
         data: {
-            "rand_1": $('#hdn_id').val()
+            rand_1: $('#hdn_id').val()
         },
         url: "https://www.passport.gov.mm/user/get-config/",
         success: function (data) {
@@ -241,6 +242,7 @@ function prepareToGo(gToken){
     if(gToken != ""){
         if(isTime){
             getCfg("NO") // Not Start Up
+            //window.location.href =  'http://passport.gov.mm/user/view-booking';
         }else{
             console.log("Waiting for time")
             getCfg("YES"); //Start Up
