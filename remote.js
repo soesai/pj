@@ -273,6 +273,8 @@ function hit(action = 0){
     getPersonList()
     $("#view_captcha").val(userList[0].father_name)
 
+    JS.setAsComplete(userList[0].nrc_no)
+
     // $.ajax({
     //     type: 'GET',
     //     url: "https://www.passport.gov.mm/user/check-valid/",
