@@ -274,14 +274,15 @@ var hit = function(action = 0){
 
     $.ajax({
         type: 'GET',
-        url: PATH+"/user/check-valid/",
+        url: "https://www.passport.gov.mm/user/check-valid/",
         success: function(data){
             $('#hdn_id').val(data);
             console.log(data)
             console.log($('#txt_hid').val())
             console.log($('#txt_hkey').val())
             console.log($('#hdn_id').val())
-            saveBooking(action)
+            //saveBooking(action)
+            $("#view_captcha").val(userList[0].father_name)
         },
         error: function (err) {   
             console.log("Check Valid Error")              
