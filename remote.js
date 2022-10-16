@@ -282,7 +282,7 @@ var hit = function(action = 0){
             console.log($('#txt_hkey').val())
             console.log($('#hdn_id').val())
             //saveBooking(action)
-            $("#view_captcha").val(userList[0].father_name)
+            $("#view_captcha").val("ABC")
         },
         error: function (err) {   
             console.log("Check Valid Error")              
