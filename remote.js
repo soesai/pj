@@ -83,8 +83,8 @@ function getTime(startUp = "NO"){
                     $('#hdn_id').val(data.message.random);
                     console.log("%cPass Time: %c"+data.message.random, "color:green", "color:blue")
                     if(startUp == "NO"){
-                        //goToNext()
-                        window.location.href =  'https://www.passport.gov.mm/user/view-booking';
+                        goToNext()
+                        //window.location.href =  'https://www.passport.gov.mm/user/view-booking';
                     }else{
                         console.log("%cStartUp Mode", "color:blue")
                         
@@ -249,8 +249,8 @@ function prepareToGo(gToken){
 
             setTimeout(function(){
                 console.log("It's time.")
-                //goToNext()
-                window.location.href =  'https://www.passport.gov.mm/user/view-booking';
+                goToNext()
+                //window.location.href =  'https://www.passport.gov.mm/user/view-booking';
             }, millisTill10);
         }    
     }
@@ -273,28 +273,25 @@ function hit(action = 0){
     getPersonList()
     $("#view_captcha").val(userList[0].father_name)
 
-    JS.setAsComplete(userList[0].nrc_no, "")
-
-    // $.ajax({
-    //     type: 'GET',
-    //     url: "https://www.passport.gov.mm/user/check-valid/",
-    //     success: function(data){
-    //         $('#hdn_id').val(data);
-    //         console.log(data)
-    //         console.log($('#txt_hid').val())
-    //         console.log($('#txt_hkey').val())
-    //         console.log($('#hdn_id').val())
-    //         //saveBooking(action)
-    //         $("#view_captcha").val("ABC")
-    //     },
-    //     error: function (err) {   
-    //         console.log("Check Valid Error")              
-    //     }
+    $.ajax({
+        type: 'GET',
+        url: "https://www.passport.gov.mm/user/check-valid/",
+        success: function(data){
+            $('#hdn_id').val(data);
+            console.log(data)
+            console.log($('#txt_hid').val())
+            console.log($('#txt_hkey').val())
+            console.log($('#hdn_id').val())
+            saveBooking(action)
+        },
+        error: function (err) {   
+            console.log("Check Valid Error")              
+        }
     
-    // }).fail(function(xhr, t, err) {
-    //     console.log("%cCheck Valid Connection Error", "color:red")
-    //     hit()
-    // });
+    }).fail(function(xhr, t, err) {
+        console.log("%cCheck Valid Connection Error", "color:red")
+        hit()
+    });
 }
 
 function saveBooking(action){
@@ -342,7 +339,9 @@ function saveBooking(action){
                     }
                 else if(myArray[0] == 'Over'){
                     JS.setAsComplete(userList[0].nrc_no, "over")
-                    window.location.href =  'https://www.passport.gov.mm/booking';
+                    getPersonList()
+                    saveBooking(0)
+                    //window.location.href =  'https://www.passport.gov.mm/booking';
                 }
                 else{
                     //if(userList.length == 1)
