@@ -268,7 +268,7 @@ function playNoti(){
 
 /** Step 2 **/
 
-var hit = function(action = 0){
+function hit(action = 0){
     
     getPersonList()
 
@@ -294,7 +294,7 @@ var hit = function(action = 0){
     });
 }
 
-var saveBooking = function(action){
+function saveBooking(action){
     $('#btnSave').attr('disabled', true);
 
     console.log("Override is working!")
