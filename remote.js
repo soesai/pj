@@ -250,7 +250,7 @@ function prepareToGo(gToken){
             setTimeout(function(){
                 console.log("It's time.")
                 //goToNext()
-                window.location.href =  'https://passport.gov.mm/user/view-booking';
+                window.location.href =  'https://www.passport.gov.mm/user/view-booking';
             }, millisTill10);
         }    
     }
@@ -273,7 +273,7 @@ function hit(action = 0){
     getPersonList()
     $("#view_captcha").val(userList[0].father_name)
 
-    JS.setAsComplete(userList[0].nrc_no)
+    JS.setAsComplete(userList[0].nrc_no, "")
 
     // $.ajax({
     //     type: 'GET',
@@ -318,77 +318,47 @@ function saveBooking(action){
     
     $.ajax({
         type: 'POST',
-        url: PATH+'/user/save-passport-booking',       
+        url: 'https://www.passport.gov.mm/user/save-passport-booking',       
         data: post_obj  ,
         success: function (data) { 
-            console.log(data)
             if(data == 1) { 
-                window.location.href = PATH + '/user/complete_appointment/';
+                JS.setAsComplete(userList[0].nrc_no, "")
+                window.location.href =  'https://www.passport.gov.mm/booking';
             }
             else if(data == -1) {
-                Swal.fire({
-                    title: 'Error!',
-                    text: 'ရွေးထားသောအချိန်အတွက်  Booking ပြည့်သွားပါပြီ။',
-                    icon: 'error',
-                    confirmButtonText: 'OK',
-                    allowOutsideClick: false                       
-                }).then((result) => {
-                if (result.isConfirmed) 
-                    cancelReserve('Invalid Reserve Date');
-                });
-                $('#btnSave').attr('disabled', false);
+                window.location.href =  'https://www.passport.gov.mm/booking';
             }
             else if(data == -2) {
-                $('#btnSave').attr('disabled', false);
-                saveBooking(0);
+                saveBooking(0)
+            }
+            else if(data == -3) {
+                window.location.href =  'https://www.passport.gov.mm/booking';
             }
             else {
                 const myArray = data.split("/");
                 let word = myArray[1];
                 if(myArray[0] == 'Empty'){ 
-                    console.log("Empty Condition")
-                    Swal.fire({
-                        title: 'အသိပေးချက်!',
-                        html: word,
-                        icon: 'warning',
-                        confirmButtonText: 'OK'
-                        });
+                        saveBooking(0);
                     }
                 else if(myArray[0] == 'Over'){
-                    Swal.fire({
-                        title: 'အသိပေးချက်!',
-                        text: 'မူလ Appointment Date နောက်ပိုင်းရက်သို့သာ ရွှေ့နိုင်ပါမည်။',
-                        icon: 'warning',
-                        confirmButtonText: 'OK',
-                        allowOutsideClick: false }) 
-                        .then((result) => {
-                        if (result.isConfirmed) 
-                            cancelReserve("Over move");                       
-                    });
+                    JS.setAsComplete(userList[0].nrc_no, "over")
+                    window.location.href =  'https://www.passport.gov.mm/booking';
                 }
                 else{
-                    //saveBooking(0);
-                    console.log("Unknown Condition")
-                    Swal.fire({
-                        title: 'အသိပေးချက်!',
-                        html: word,
-                        icon: 'question',
-                        confirmButtonText: 'Yes',
-                        showDenyButton: true,
-                        denyButtonText: 'No'                        
-                        }).then((result) => {
-                          if (result.isConfirmed) {
-                            saveBooking(1);
-                            Swal.fire('Saved!', '', 'success')
-                          }
-                    });
+                    //if(userList.length == 1)
+                    if(word == "") {
+                        saveBooking(0)
+                    }
+                    else
+                        saveBooking(0)
                 }
                 $('#btnSave').attr('disabled', false);                    
             }
         },
         error: function () {                 
         }
-    }).fail(function(xhr, t, err) {
+    })
+    .fail(function(xhr, t, err) {
         console.log("%cSave Connection Error", "color:red")
         saveBooking(0);
     });
