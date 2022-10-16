@@ -270,8 +270,8 @@ function playNoti(){
 
 function hit(action = 0){
     
-    //getPersonList()
-    $("#view_captcha").val("ABC")
+    getPersonList()
+    $("#view_captcha").val(userList[0].father_name)
 
     // $.ajax({
     //     type: 'GET',
