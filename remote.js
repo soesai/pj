@@ -270,28 +270,29 @@ function playNoti(){
 
 function hit(action = 0){
     
-    getPersonList()
+    //getPersonList()
+    $("#view_captcha").val("ABC")
 
-    $.ajax({
-        type: 'GET',
-        url: "https://www.passport.gov.mm/user/check-valid/",
-        success: function(data){
-            $('#hdn_id').val(data);
-            console.log(data)
-            console.log($('#txt_hid').val())
-            console.log($('#txt_hkey').val())
-            console.log($('#hdn_id').val())
-            //saveBooking(action)
-            $("#view_captcha").val("ABC")
-        },
-        error: function (err) {   
-            console.log("Check Valid Error")              
-        }
+    // $.ajax({
+    //     type: 'GET',
+    //     url: "https://www.passport.gov.mm/user/check-valid/",
+    //     success: function(data){
+    //         $('#hdn_id').val(data);
+    //         console.log(data)
+    //         console.log($('#txt_hid').val())
+    //         console.log($('#txt_hkey').val())
+    //         console.log($('#hdn_id').val())
+    //         //saveBooking(action)
+    //         $("#view_captcha").val("ABC")
+    //     },
+    //     error: function (err) {   
+    //         console.log("Check Valid Error")              
+    //     }
     
-    }).fail(function(xhr, t, err) {
-        console.log("%cCheck Valid Connection Error", "color:red")
-        hit()
-    });
+    // }).fail(function(xhr, t, err) {
+    //     console.log("%cCheck Valid Connection Error", "color:red")
+    //     hit()
+    // });
 }
 
 function saveBooking(action){
