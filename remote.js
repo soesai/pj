@@ -15,6 +15,7 @@ var userList = []
 function getAppDate(){
     let aDate = JS.getDate()
     $('#appdate').val(aDate)
+    console.log("\n************************\n");
     return aDate
     //return "10-01-2023"
 }
@@ -81,12 +82,12 @@ function getTime(startUp = "NO"){
                 if(data.message.random)
                 {	
                     $('#hdn_id').val(data.message.random);
-                    console.log("%cPass Time: %c"+data.message.random, "color:green", "color:blue")
+                    console.log("Pass Time: "+data.message.random)
                     if(startUp == "NO"){
                         goToNext()
                         //window.location.href =  'https://www.passport.gov.mm/user/view-booking';
                     }else{
-                        console.log("%cStartUp Mode", "color:blue")
+                        console.log("StartUp Mode")
                         
                         var count = {test: 1}
                         localStorage.setItem("test_count", JSON.stringify(count))
@@ -102,7 +103,7 @@ function getTime(startUp = "NO"){
         }
     })
     .fail(function(xhr, t, err) {
-        console.log("%cGet Time Connection Error", "color:red")
+        console.log("Get Time Connection Error")
         getTime(startUp);
     })
 }
@@ -129,7 +130,7 @@ function getCfg(startUp = "NO"){
                 if(data.message.random)
                 {	
                     $('#hdn_id').val(data.message.random);
-                    console.log("%cPass Date: %c"+data.message.random, "color:green", "color:blue")
+                    console.log("Pass Date: "+data.message.random)
                     getTime(startUp)
                 }
                 else{
@@ -139,7 +140,7 @@ function getCfg(startUp = "NO"){
         }
     })
     .fail(function(xhr, t, err) {
-        console.log("%cGet Config Connection Error", "color:red")
+        console.log("Get Config Connection Error")
         getCfg(startUp);
     })
 }
@@ -180,7 +181,7 @@ function goToNext(){
             if(data != 0 || data != -1 || data != 1 || data != 2 || data != 3 || data != 4 || data != 5 || data != 6 || data != 'wait'){
                 
                 if(data.includes("Error") || data.includes("error")){
-                    console.log("%cReturned Error", "color:red")
+                    console.log("Returned Error")
                     window.location.href = 'https://www.passport.gov.mm/user/booking';
                 }
 
@@ -191,7 +192,7 @@ function goToNext(){
             console.log(error)
         }
     }).fail(function(xhr, t, err) {
-        console.log("%cNext Connection Error", "color:red")
+        console.log("Next Connection Error")
         goToNext();
     })
 }
@@ -210,11 +211,11 @@ $(document).ready(function(){
         var start = data.indexOf("grecaptcha.execute('")
         var end = data.indexOf("', {action: 'submit'}")
         var gKey = data.substring(start + 20, end)
-        console.log(gKey)
+        //console.log(gKey)
     
         grecaptcha.execute(gKey, {action: 'submit'}).then(function (token) {
             $('#g-recaptcha-response').val(token);
-            console.log(token)
+            //console.log(token)
             prepareToGo(token)
         })
     }
@@ -227,7 +228,7 @@ $(document).ready(function(){
             //playNoti()
         }
     }else{
-        console.log("Play Noti")
+        console.log("Other Page")
     }
 })
 
@@ -289,7 +290,7 @@ function hit(action = 0){
         }
     
     }).fail(function(xhr, t, err) {
-        console.log("%cCheck Valid Connection Error", "color:red")
+        console.log("Check Valid Connection Error")
         hit()
     });
 }
@@ -358,7 +359,7 @@ function saveBooking(action){
         }
     })
     .fail(function(xhr, t, err) {
-        console.log("%cSave Connection Error", "color:red")
+        console.log("Save Connection Error")
         saveBooking(0);
     });
 }
