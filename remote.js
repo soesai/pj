@@ -224,7 +224,7 @@ $(document).ready(function(){
         if(data.includes("<body>Wait")){
             window.location.href =  'https://www.passport.gov.mm/user/booking';
         }else{
-            playNoti()
+            //playNoti()
         }
     }else{
         console.log("Play Noti")
