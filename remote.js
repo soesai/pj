@@ -159,6 +159,8 @@ function goToNext(){
         console.log("First Time")
     }
 
+    console.log("Captcha - ", $("img").attr('src').split('=')[1])
+
     $.ajax({
         type: 'POST',
         url: 'https://www.passport.gov.mm/user/reserve',       
