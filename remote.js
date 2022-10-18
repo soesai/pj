@@ -219,13 +219,15 @@ $(document).ready(function(){
             prepareToGo(token)
         })
     }
+
     else if(current_url == "https://www.passport.gov.mm/user/booking_info"){
         console.log("Open Form")
         var data = document.documentElement.innerHTML
-        if(data.includes("<body>Wait")){
+        if(data.includes("<body>Wait") || data.includes("<body><text>Wait</text>")){
+            console.log("Form is Fake")
             window.location.href =  'https://www.passport.gov.mm/user/booking';
         }else{
-            //playNoti()
+            console.log("Form is Real")
         }
     }else{
         console.log("Other Page")
@@ -272,14 +274,15 @@ function playNoti(){
 function hit(action = 0){
     
     getPersonList()
-    $("#view_captcha").val(userList[0].father_name)
+    //$("#view_captcha").val(userList[0].father_name)
 
     $.ajax({
         type: 'GET',
         url: "https://www.passport.gov.mm/user/check-valid/",
         success: function(data){
             $('#hdn_id').val(data);
-            console.log(data)
+            console.log("KEYS ARE UNDER")
+            console.log("---------------")
             console.log($('#txt_hid').val())
             console.log($('#txt_hkey').val())
             console.log($('#hdn_id').val())
@@ -298,8 +301,8 @@ function hit(action = 0){
 function saveBooking(action){
     $('#btnSave').attr('disabled', true);
 
-    console.log("Override is working!")
     console.log("Action - ", action)
+    console.log("Uploading...")
 
     var post_obj = {   
         "reserve_id": $('#txt_hid').val(), 
@@ -327,6 +330,7 @@ function saveBooking(action){
                 window.location.href =  'https://www.passport.gov.mm/booking';
             }
             else if(data == -2) {
+                console.log("Retrying...")
                 saveBooking(0)
             }
             else if(data == -3) {
@@ -340,9 +344,9 @@ function saveBooking(action){
                     }
                 else if(myArray[0] == 'Over'){
                     JS.setAsComplete(userList[0].nrc_no, "over")
+                    console.log("Get new & Retrying...")
                     getPersonList()
                     saveBooking(0)
-                    //window.location.href =  'https://www.passport.gov.mm/booking';
                 }
                 else{
                     //if(userList.length == 1)
