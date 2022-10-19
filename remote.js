@@ -369,3 +369,14 @@ function saveBooking(action){
         saveBooking(0);
     });
 }
+
+function isFormReal(){
+    let data = document.documentElement.innerHTML
+    if(data.includes("<body>Wait") || data.includes("<body><text>Wait</text>")){
+        console.log("Form is Fake")
+        return false        
+    }else{
+        console.log("Form is real")
+        return true
+    }
+}
