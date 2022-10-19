@@ -370,13 +370,13 @@ function saveBooking(action){
     });
 }
 
-function isFormReal(){
+function uploadIfReal(){
     let data = document.documentElement.innerHTML
     if(data.includes("<body>Wait") || data.includes("<body><text>Wait</text>")){
         console.log("Form is Fake")
-        return false        
+        window.location.href =  'https://www.passport.gov.mm/user/booking';
     }else{
         console.log("Form is real")
-        return true
+        hit()
     }
 }
