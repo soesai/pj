@@ -250,7 +250,7 @@ function prepareToGo(gToken){
     if(gToken != ""){
         if(isTime){
             //getCfg("NO") // Not Start Up
-            window.location.href =  'http://www.passport.gov.mm';
+            window.location.href =  'https://www.passport.gov.mm';
         }else{
             console.log("Waiting for time")
             getCfg("YES"); //Start Up
