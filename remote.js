@@ -11,10 +11,12 @@ if (millisTill10 < 0) {
 var testCount = 1
 var waitCount = 0
 var userList = []
+var myDate = ""
 
 function getAppDate(){
     let aDate = JS.getDate()
     $('#appdate').val(aDate)
+    myDate = aDate
     return aDate
     //return "10-01-2023"
 }
@@ -22,6 +24,7 @@ function getAppDate(){
 function getAppTime(){
     let aTime = JS.getTime()
     $('#captcha').val(aTime)
+    console.log(`${myDate} => ${aTime}`)
     return aTime
 }
 
