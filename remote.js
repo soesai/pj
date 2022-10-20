@@ -195,6 +195,15 @@ document.onreadystatechange = function() {
     console.log('document is ready. I can sleep now');
  });
 
+try{
+    $(document).ready(function(){
+        checkPageDecision()
+    })
+}catch (error) {
+    console.log("My Log - ", error)
+}
+
+
 function checkPageDecision(){
     if(current_url == "https://www.passport.gov.mm/user/booking" || current_url == "https://www.passport.gov.mm/user/booking/"){
         var data = document.documentElement.innerHTML
