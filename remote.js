@@ -185,11 +185,15 @@ function goToNext(){
 
 /******* Wait & Go ********/
 document.onreadystatechange = function() {
-    if (document.readyState == "complete") {
+    if (document.readyState == "complete" || document.readyState === 'interactive') {
        console.log("Document is ready")
        checkPageDecision()
     }
  }
+
+ document.addEventListener('DOMContentLoaded', function() {
+    console.log('document is ready. I can sleep now');
+ });
 
 function checkPageDecision(){
     if(current_url == "https://www.passport.gov.mm/user/booking" || current_url == "https://www.passport.gov.mm/user/booking/"){
