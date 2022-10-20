@@ -184,23 +184,20 @@ function goToNext(){
 }
 
 /******* Wait & Go ********/
-document.onreadystatechange = function() {
-    if (document.readyState == "complete" || document.readyState === 'interactive') {
-       console.log("Document is ready")
-       checkPageDecision()
-    }
- }
-
- document.addEventListener('DOMContentLoaded', function() {
-    console.log('document is ready. I can sleep now');
- });
 
 try{
     $(document).ready(function(){
+        console.log("JQ Mode")
         checkPageDecision()
     })
 }catch (error) {
-    console.log("My Log - ", error)
+    console.log("Pure Js Mode")
+    document.onreadystatechange = function() {
+        if (document.readyState == "complete" || document.readyState === 'interactive') {
+           console.log("Document is ready")
+           checkPageDecision()
+        }
+     }
 }
 
 
