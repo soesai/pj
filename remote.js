@@ -84,7 +84,6 @@ function getTime(startUp = "NO"){
                     console.log("Pass Time: "+data.message.random)
                     if(startUp == "NO"){
                         goToNext()
-                        //window.location.href =  'https://www.passport.gov.mm/user/view-booking';
                     }else{
                         console.log("StartUp Mode")
                         
@@ -188,6 +187,7 @@ function goToNext(){
 try{
     $(document).ready(function(){
         console.log("JQ Mode")
+        console.log("Document is Ready")
         checkPageDecision()
     })
 }catch (error) {
@@ -224,8 +224,8 @@ function checkPageDecision(){
             prepareToGo(token)
         })
     }
-    //else if(current_url == "https://www.passport.gov.mm/user/booking_info" || current_url == "https://www.passport.gov.mm/user/booking_info/"){
-    else if(current_url == "https://www.passport.gov.mm" || current_url == "https://www.passport.gov.mm/"){
+
+    else if(current_url == "https://www.passport.gov.mm/user/booking_info" || current_url == "https://www.passport.gov.mm/user/booking_info/"){
         console.log("Open Form")
         var data = document.documentElement.innerHTML
         if(data.includes("<body>Wait") || data.includes("<body><text>Wait</text>")){
@@ -250,8 +250,7 @@ function prepareToGo(gToken){
     
     if(gToken != ""){
         if(isTime){
-            //getCfg("NO") // Not Start Up
-            window.location.href =  'https://www.passport.gov.mm';
+            getCfg("NO") // Not Start Up
         }else{
             console.log("Waiting for time")
             getCfg("YES"); //Start Up
@@ -259,7 +258,6 @@ function prepareToGo(gToken){
             setTimeout(function(){
                 console.log("It's time.")
                 goToNext()
-                //window.location.href =  'https://www.passport.gov.mm/user/view-booking';
             }, millisTill10);
         }    
     }
@@ -371,14 +369,13 @@ function uploadIfReal(){
     if(hid){
         let hid_value = document.getElementById("txt_hid").value
         if(hid_value){
-            console.log("Form is real 100%")
+            console.log("Form is real 100%\n")
             hit()
         }else{
             console.log("require id!")
         }
     }else{
         console.log("ID Not Found!")
-        console.log("Form is Fake")
         window.location.href =  'https://www.passport.gov.mm/user/booking';
     }
 
