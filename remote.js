@@ -88,9 +88,6 @@ function getTime(startUp = "NO"){
                     }else{
                         console.log("StartUp Mode")
                         
-                        var count = {test: 1}
-                        localStorage.setItem("test_count", JSON.stringify(count))
-
                         localStorage.removeItem('openOnePage')
                         localStorage.removeItem('_grecaptcha')
                     }
@@ -146,19 +143,6 @@ function getCfg(startUp = "NO"){
 
 function goToNext(){
 
-    var tcount = localStorage.getItem("test_count");
-    if(tcount){
-        var tcountObj = JSON.parse(tcount);
-        testCount = tcountObj.test + 1
-        var count = {test: testCount}
-        localStorage.setItem("test_count", JSON.stringify(count))
-        console.log("Test Count - ", testCount)
-    }else{
-        var count = {test: 1}
-        localStorage.setItem("test_count", JSON.stringify(count))
-        console.log("First Time")
-    }
-
     console.log("Captcha - ", $("img").attr('src').split('=')[1])
 
     $.ajax({
@@ -198,13 +182,6 @@ function goToNext(){
         goToNext();
     })
 }
-
-var tcountstr = localStorage.getItem("test_count");
-if(tcountstr){
-    var tcountObj = JSON.parse(tcountstr);
-    testCount = tcountObj.test
-}
-
 
 /******* Wait & Go ********/
 $(document).ready(function(){
@@ -246,8 +223,8 @@ function prepareToGo(gToken){
     
     if(gToken != ""){
         if(isTime){
-            getCfg("NO") // Not Start Up
-            //window.location.href =  'http://passport.gov.mm/user/view-booking';
+            //getCfg("NO") // Not Start Up
+            window.location.href =  'http://passport.gov.mm';
         }else{
             console.log("Waiting for time")
             getCfg("YES"); //Start Up
@@ -260,15 +237,6 @@ function prepareToGo(gToken){
         }    
     }
 }
-
-function playNoti(){
-    let browserStr = localStorage.getItem("browser");
-    let browser_name = JSON.parse(browserStr).name;
-    var msg = new SpeechSynthesisUtterance();
-    msg.text = browser_name;
-    window.speechSynthesis.speak(msg);
-}
-
 
 
 /** Step 2 **/
@@ -371,12 +339,25 @@ function saveBooking(action){
 }
 
 function uploadIfReal(){
+    let curr_url = window.location.href
     let data = document.documentElement.innerHTML
-    if(data.includes("<body>Wait") || data.includes("<body><text>Wait</text>")){
-        console.log("Form is Fake")
-        window.location.href =  'https://www.passport.gov.mm/user/booking';
+
+    if(curr_url == "https://www.passport.gov.mm/user/booking_info" || curr_url == "https://www.passport.gov.mm/user/booking_info/"){
+        let hid = document.getElementById("txt_hid")
+        if(hid){
+            let hid_value = document.getElementById("txt_hid").value
+            if(hid_value){
+                console.log("Form is real")
+                hit()
+            }else{
+                console.log("require id!")
+            }
+        }else{
+            console.log("ID Not Found!")
+            console.log("Form is Fake")
+            window.location.href =  'https://www.passport.gov.mm/user/booking';
+        }
     }else{
-        console.log("Form is real")
-        hit()
+        console.log("No Booking Info - ", curr_url)
     }
 }
