@@ -1,5 +1,5 @@
 var current_url = window.location.href
-
+console.log("Refreshed Page.")
 var now = new Date();
 var h = 9;
 var m = 0;
@@ -184,14 +184,21 @@ function goToNext(){
 }
 
 /******* Wait & Go ********/
-$(document).ready(function(){
-    if(current_url == "https://www.passport.gov.mm/user/booking"){
+document.onreadystatechange = function() {
+    if (document.readyState == "complete") {
+       console.log("Document is ready")
+       checkPageDecision()
+    }
+ }
+
+function checkPageDecision(){
+    if(current_url == "https://www.passport.gov.mm/user/booking" || current_url == "https://www.passport.gov.mm/user/booking/"){
         var data = document.documentElement.innerHTML
         var start = data.indexOf("grecaptcha.execute('")
         var end = data.indexOf("', {action: 'submit'}")
         var gKey = data.substring(start + 20, end)
         //console.log(gKey)
-    
+
         grecaptcha.execute(gKey, {action: 'submit'}).then(function (token) {
             $('#g-recaptcha-response').val(token);
             //console.log(token)
@@ -199,7 +206,7 @@ $(document).ready(function(){
         })
     }
 
-    else if(current_url == "https://www.passport.gov.mm/user/booking_info"){
+    else if(current_url == "https://www.passport.gov.mm/user/booking_info" || current_url == "https://www.passport.gov.mm/user/booking_info/"){
         console.log("Open Form")
         var data = document.documentElement.innerHTML
         if(data.includes("<body>Wait") || data.includes("<body><text>Wait</text>")){
@@ -211,7 +218,7 @@ $(document).ready(function(){
     }else{
         console.log("Other Page")
     }
-})
+}
 
 
 function prepareToGo(gToken){
@@ -356,7 +363,8 @@ function uploadIfReal(){
         }else{
             console.log("ID Not Found!")
             console.log("Form is Fake")
-            window.location.href =  'https://www.passport.gov.mm/user/booking';
+            //window.location.href =  'https://www.passport.gov.mm/user/booking';
+            window.location.href =  'https://www.passport.gov.mm/user/view-booking';
         }
     }else{
         console.log("No Booking Info - ", curr_url)
