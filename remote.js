@@ -235,7 +235,7 @@ function checkPageDecision(){
             console.log("Form is Real")
         }
     }else{
-        console.log("Other Page")
+        console.log("Other Page - ", current_url)
     }
 }
 
@@ -250,7 +250,7 @@ function prepareToGo(gToken){
     if(gToken != ""){
         if(isTime){
             //getCfg("NO") // Not Start Up
-            window.location.href =  'http://passport.gov.mm';
+            window.location.href =  'http://www.passport.gov.mm';
         }else{
             console.log("Waiting for time")
             getCfg("YES"); //Start Up
