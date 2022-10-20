@@ -342,7 +342,8 @@ function uploadIfReal(){
     let curr_url = window.location.href
     let data = document.documentElement.innerHTML
 
-    if(curr_url == "https://www.passport.gov.mm/user/booking_info" || curr_url == "https://www.passport.gov.mm/user/booking_info/"){
+    //if(curr_url == "https://www.passport.gov.mm/user/booking_info" || curr_url == "https://www.passport.gov.mm/user/booking_info/"){
+    if(curr_url == "https://www.passport.gov.mm" || curr_url == "https://www.passport.gov.mm/"){
         let hid = document.getElementById("txt_hid")
         if(hid){
             let hid_value = document.getElementById("txt_hid").value
