@@ -224,15 +224,16 @@ function checkPageDecision(){
             prepareToGo(token)
         })
     }
-
-    else if(current_url == "https://www.passport.gov.mm/user/booking_info" || current_url == "https://www.passport.gov.mm/user/booking_info/"){
+    //else if(current_url == "https://www.passport.gov.mm/user/booking_info" || current_url == "https://www.passport.gov.mm/user/booking_info/"){
+    else if(current_url == "https://www.passport.gov.mm" || current_url == "https://www.passport.gov.mm/"){
         console.log("Open Form")
         var data = document.documentElement.innerHTML
         if(data.includes("<body>Wait") || data.includes("<body><text>Wait</text>")){
             console.log("Form is Fake")
             window.location.href =  'https://www.passport.gov.mm/user/booking';
         }else{
-            console.log("Form is Real")
+            console.log("Form is real 50%")
+            uploadIfReal()
         }
     }else{
         console.log("Other Page - ", current_url)
@@ -365,27 +366,20 @@ function saveBooking(action){
 }
 
 function uploadIfReal(){
-    let curr_url = window.location.href
-    let data = document.documentElement.innerHTML
 
-    //if(curr_url == "https://www.passport.gov.mm/user/booking_info" || curr_url == "https://www.passport.gov.mm/user/booking_info/"){
-    if(curr_url == "https://www.passport.gov.mm" || curr_url == "https://www.passport.gov.mm/"){
-        let hid = document.getElementById("txt_hid")
-        if(hid){
-            let hid_value = document.getElementById("txt_hid").value
-            if(hid_value){
-                console.log("Form is real")
-                hit()
-            }else{
-                console.log("require id!")
-            }
+    let hid = document.getElementById("txt_hid")
+    if(hid){
+        let hid_value = document.getElementById("txt_hid").value
+        if(hid_value){
+            console.log("Form is real 100%")
+            hit()
         }else{
-            console.log("ID Not Found!")
-            console.log("Form is Fake")
-            //window.location.href =  'https://www.passport.gov.mm/user/booking';
-            window.location.href =  'https://www.passport.gov.mm/user/view-booking';
+            console.log("require id!")
         }
     }else{
-        console.log("No Booking Info - ", curr_url)
+        console.log("ID Not Found!")
+        console.log("Form is Fake")
+        window.location.href =  'https://www.passport.gov.mm/user/booking';
     }
+
 }
