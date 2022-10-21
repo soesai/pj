@@ -166,14 +166,19 @@ function goToNext(){
             console.log(data)
             console.log("\n************************\n");
             localStorage.setItem("status_code", data)
-            if(data != 0 || data != -1 || data != 1 || data != 2 || data != 3 || data != 4 || data != 5 || data != 6 || data != 'wait'){
-                
+
+            if(data == -1 || data == 0 || data == 1 || data == 2 || data == 3 || data == 4 || data == 5 || data == 6 || data == "wait" || data == "Wait"){
+                console.log("Redirect to Step-1")
+                window.location.href = 'https://www.passport.gov.mm/user/booking';
+            }
+            else{
                 if(data.includes("Error") || data.includes("error")){
                     console.log("Returned Error")
                     window.location.href = 'https://www.passport.gov.mm/user/booking';
                 }
-
-                window.location.href = 'https://www.passport.gov.mm/user/booking_info';
+                else{
+                    window.location.href = 'https://www.passport.gov.mm/user/booking_info';
+                }
             }
         },
         error: function(error){
@@ -240,6 +245,10 @@ function checkPageDecision(){
         }
     }else{
         console.log("Other Page - ", current_url)
+        if(current_url.includes("Error") || current_url.includes("error")){
+            console.log("reload step 1")
+            window.location.href = 'https://www.passport.gov.mm/user/booking';
+        }
     }
 }
 
