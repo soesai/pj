@@ -249,6 +249,9 @@ function checkPageDecision(){
             console.log("reload step 1")
             window.location.href = 'https://www.passport.gov.mm/user/booking';
         }
+        else if(current_url == "https://www.passport.gov.mm/user/booking" || current_url == "https://www.passport.gov.mm/user/booking/"){
+            window.location.href = 'https://www.passport.gov.mm/user/booking';
+        }
     }
 }
 
