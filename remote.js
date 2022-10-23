@@ -367,8 +367,11 @@ function saveBooking(action){
                     }
                     else{
                         console.log("option 1 zone")
-                        saveBooking(1)
-                        saveBooking(0)
+                        if(action == 0){
+                            saveBooking(1)
+                        }else{
+                            saveBooking(0)
+                        }
                     }
                 }
                 $('#btnSave').attr('disabled', false);                    
