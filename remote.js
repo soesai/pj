@@ -349,7 +349,8 @@ function saveBooking(action){
             else {
                 const myArray = data.split("/");
                 let word = myArray[1];
-                if(myArray[0] == 'Empty'){ 
+                if(myArray[0] == 'Empty'){
+                        console.log("Empty zone") 
                         saveBooking(0);
                     }
                 else if(myArray[0] == 'Over'){
@@ -361,10 +362,14 @@ function saveBooking(action){
                 else{
                     //if(userList.length == 1)
                     if(word == "") {
+                        console.log("Blank word zone")
                         saveBooking(0)
                     }
-                    else
+                    else{
+                        console.log("option 1 zone")
+                        saveBooking(1)
                         saveBooking(0)
+                    }
                 }
                 $('#btnSave').attr('disabled', false);                    
             }
