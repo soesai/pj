@@ -245,13 +245,7 @@ function checkPageDecision(){
         }
     }else{
         console.log("Other Page - ", current_url)
-        if(current_url.includes("Error") || current_url.includes("error")){
-            console.log("reload step 1")
-            window.location.href = 'https://www.passport.gov.mm/user/booking';
-        }
-        else if(current_url == "https://www.passport.gov.mm/user/booking" || current_url == "https://www.passport.gov.mm/user/booking/"){
-            window.location.href = 'https://www.passport.gov.mm/user/booking';
-        }
+        window.location.href = 'https://www.passport.gov.mm/user/booking';
     }
 }
 
