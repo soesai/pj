@@ -88,7 +88,7 @@ function getTime(startUp = "NO"){
                     if(startUp == "NO"){
                         goToNext()
                     }else{
-                        console.log("StartUp Mode")
+                        console.log("၉ နာရီအချိန်ကို စောင့်ဆိုင်းနေသည်")
                         
                         localStorage.removeItem('openOnePage')
                         localStorage.removeItem('_grecaptcha')
