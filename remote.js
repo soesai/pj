@@ -18,7 +18,6 @@ function getAppDate(){
     $('#appdate').val(aDate)
     myDate = aDate
     return aDate
-    //return "10-01-2023"
 }
 
 function getAppTime(){
@@ -147,46 +146,57 @@ function goToNext(){
 
     console.log("Captcha - ", $("img").attr('src').split('=')[1])
 
-    $.ajax({
-        type: 'POST',
-        url: 'https://www.passport.gov.mm/user/reserve',       
-        data: {  
-            "appdate": getAppDate(),
-            "apptime": getAppTime(),
-            "station": '16',
-            "no_of_booking": '1',
-            "ip_address": "37.19.205.19",
-            "captcha": $("img").attr('src').split('=')[1],
-            "start_day" : '1',
-            "end_day" : '89',
-            "rand_1": $('#hdn_id').val(),
-            "g_recaptcha_response": $('#g-recaptcha-response').val()
-        },
-        success: function (data) {
-            console.log(data)
-            console.log("\n************************\n");
-            localStorage.setItem("status_code", data)
+    var data = document.documentElement.innerHTML
+    var start = data.indexOf("grecaptcha.execute('")
+    var end = data.indexOf("', {action: 'submit'}")
+    var gKey = data.substring(start + 20, end)
+    //console.log(gKey)
 
-            if(data == -1 || data == 0 || data == 1 || data == 2 || data == 3 || data == 4 || data == 5 || data == 6 || data == "wait" || data == "Wait"){
-                console.log("Redirect to Step-1")
-                window.location.href = 'https://www.passport.gov.mm/user/booking';
-            }
-            else{
-                if(data.includes("Error") || data.includes("error")){
-                    console.log("Returned Error")
+    grecaptcha.execute(gKey, {action: 'submit'}).then(function (token) {
+        $('#g-recaptcha-response').val(token);
+        
+        $.ajax({
+            type: 'POST',
+            url: 'https://www.passport.gov.mm/user/reserve',       
+            data: {  
+                "appdate": getAppDate(),
+                "apptime": getAppTime(),
+                "station": '16',
+                "no_of_booking": '1',
+                "ip_address": "37.19.205.19",
+                "captcha": $("img").attr('src').split('=')[1],
+                "start_day" : '1',
+                "end_day" : '89',
+                "rand_1": $('#hdn_id').val(),
+                "g_recaptcha_response": token
+            },
+            success: function (data) {
+                console.log(data)
+                console.log("\n************************\n");
+                localStorage.setItem("status_code", data)
+    
+                if(data == -1 || data == 0 || data == 1 || data == 2 || data == 3 || data == 4 || data == 5 || data == 6 || data == "wait" || data == "Wait"){
+                    console.log("Redirect to Step-1")
                     window.location.href = 'https://www.passport.gov.mm/user/booking';
                 }
                 else{
-                    window.location.href = 'https://www.passport.gov.mm/user/booking_info';
+                    if(data.includes("Error") || data.includes("error")){
+                        console.log("Returned Error")
+                        window.location.href = 'https://www.passport.gov.mm/user/booking';
+                    }
+                    else{
+                        window.location.href = 'https://www.passport.gov.mm/user/booking_info';
+                    }
                 }
+            },
+            error: function(error){
+                console.log(error)
             }
-        },
-        error: function(error){
-            console.log(error)
-        }
-    }).fail(function(xhr, t, err) {
-        console.log("Next Connection Error")
-        goToNext();
+        }).fail(function(xhr, t, err) {
+            console.log("Next Connection Error")
+            goToNext();
+        })
+
     })
 }
 
@@ -220,17 +230,7 @@ function ready(callback) {
 
 function checkPageDecision(){
     if(current_url == "https://www.passport.gov.mm/user/booking" || current_url == "https://www.passport.gov.mm/user/booking/"){
-        var data = document.documentElement.innerHTML
-        var start = data.indexOf("grecaptcha.execute('")
-        var end = data.indexOf("', {action: 'submit'}")
-        var gKey = data.substring(start + 20, end)
-        //console.log(gKey)
-
-        grecaptcha.execute(gKey, {action: 'submit'}).then(function (token) {
-            $('#g-recaptcha-response').val(token);
-            //console.log(token)
-            prepareToGo(token)
-        })
+        prepareToGo()
     }
 
     else if(current_url == "https://www.passport.gov.mm/user/booking_info" || current_url == "https://www.passport.gov.mm/user/booking_info/"){
@@ -250,25 +250,23 @@ function checkPageDecision(){
 }
 
 
-function prepareToGo(gToken){
+function prepareToGo(){
     var current_time = `${now.getHours()}:${now.getMinutes()}:${now.getSeconds()}`
     console.log(current_time)
 
     var isTime = Date.parse(`01/01/2022 ${current_time}`) > Date.parse(`01/01/2022 ${h}:${m}:00`)
     console.log(isTime)
     
-    if(gToken != ""){
-        if(isTime){
-            getCfg("NO") // Not Start Up
-        }else{
-            console.log("Waiting for time")
-            getCfg("YES"); //Start Up
+    if(isTime){
+        getCfg("NO") // Not Start Up
+    }else{
+        console.log("Waiting for time")
+        getCfg("YES"); //Start Up
 
-            setTimeout(function(){
-                console.log("It's time.")
-                goToNext()
-            }, millisTill10);
-        }    
+        setTimeout(function(){
+            console.log("It's time.")
+            goToNext()
+        }, millisTill10);
     }
 }
 
