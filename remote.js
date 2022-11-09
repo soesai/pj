@@ -1,9 +1,8 @@
 var current_url = window.location.href
-console.log("Refreshed Page.")
 var now = new Date();
 var h = 9;
 var m = 0;
-var millisTill10 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 3, 0) - now;
+var millisTill10 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 1, 0) - now;
 if (millisTill10 < 0) {
      millisTill10 += 86400000;
 }
