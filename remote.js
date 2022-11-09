@@ -3,7 +3,7 @@ console.log("Refreshed Page.")
 var now = new Date();
 var h = 9;
 var m = 0;
-var millisTill10 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 0, 0) - now;
+var millisTill10 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 3, 0) - now;
 if (millisTill10 < 0) {
      millisTill10 += 86400000;
 }
@@ -12,6 +12,8 @@ var testCount = 1
 var waitCount = 0
 var userList = []
 var myDate = ""
+var nextCount = 0
+
 
 function getAppDate(){
     let aDate = JS.getDate()
@@ -152,52 +154,66 @@ function goToNext(){
     var gKey = data.substring(start + 20, end)
     //console.log(gKey)
 
-    grecaptcha.execute(gKey, {action: 'submit'}).then(function (token) {
-        $('#g-recaptcha-response').val(token);
+    try {
         
-        $.ajax({
-            type: 'POST',
-            url: 'https://www.passport.gov.mm/user/reserve',       
-            data: {  
-                "appdate": getAppDate(),
-                "apptime": getAppTime(),
-                "station": '16',
-                "no_of_booking": '1',
-                "ip_address": "37.19.205.19",
-                "captcha": $("img").attr('src').split('=')[1],
-                "start_day" : '1',
-                "end_day" : '89',
-                "rand_1": $('#hdn_id').val(),
-                "g_recaptcha_response": token
-            },
-            success: function (data) {
-                console.log(data)
-                console.log("\n************************\n");
-                localStorage.setItem("status_code", data)
+        grecaptcha.execute(gKey, {action: 'submit'}).then(function (token) {
+            $('#g-recaptcha-response').val(token);
+            //console.log(token)
     
-                if(data == -1 || data == 0 || data == 1 || data == 2 || data == 3 || data == 4 || data == 5 || data == 6 || data == "wait" || data == "Wait"){
-                    console.log("Redirect to Step-1")
-                    window.location.href = 'https://www.passport.gov.mm/user/booking';
-                }
-                else{
-                    if(data.includes("Error") || data.includes("error")){
-                        console.log("Returned Error")
-                        window.location.href = 'https://www.passport.gov.mm/user/booking';
+            $.ajax({
+                type: 'POST',
+                url: 'https://www.passport.gov.mm/user/reserve',       
+                data: {  
+                    "appdate": appDate,
+                    "apptime": appTime,
+                    "station": '16',
+                    "no_of_booking": '1',
+                    "ip_address": "37.19.205.19",
+                    "captcha": $("img").attr('src').split('=')[1],
+                    "start_day" : '1',
+                    "end_day" : '89',
+                    "rand_1": $('#hdn_id').val(),
+                    "g_recaptcha_response": token
+                },
+                success: function (data) {
+                    console.log(data)
+                    localStorage.setItem("status_code", data)
+        
+                    if(data == -1 || data == 0 || data == 1 || data == 2 || data == 3 || data == 4 || data == 5 || data == 6 || data == "wait" || data == "Wait"){
+                        console.log("Next Count - ", nextCount)
+                        if(nextCount <= 40){
+                            goToNext()
+                        }else{
+                            window.location.href = 'https://www.passport.gov.mm/user/booking';
+                        }
+                        nextCount++
+                        //window.location.href = 'https://www.passport.gov.mm/user/booking';
                     }
                     else{
-                        window.location.href = 'https://www.passport.gov.mm/user/booking_info';
+                        if(data.includes("Error") || data.includes("error")){
+                            console.log("Returned Error")
+                            window.location.href = 'https://www.passport.gov.mm/user/booking';
+                        }
+                        else{
+                            window.location.href = 'https://www.passport.gov.mm/user/booking_info';
+                        }
                     }
+                    
+                },
+                error: function(error){
+                    console.log(error)
                 }
-            },
-            error: function(error){
-                console.log(error)
-            }
-        }).fail(function(xhr, t, err) {
-            console.log("Next Connection Error")
-            goToNext();
+            }).fail(function(xhr, t, err) {
+                console.log("%cNext Connection Error", "color:red")
+                goToNext();
+            })
+    
         })
 
-    })
+    } catch (error) {
+        console.log("G-Recaptcha is null")
+        window.location.href = 'https://www.passport.gov.mm/user/booking';
+    }
 }
 
 /******* Wait & Go ********/
