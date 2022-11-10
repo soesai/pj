@@ -2,7 +2,7 @@ var current_url = window.location.href
 var now = new Date();
 var h = 9;
 var m = 0;
-var millisTill10 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 1, 0) - now;
+var millisTill10 = new Date(now.getFullYear(), now.getMonth(), now.getDate(), h, m, 0, 0) - now;
 if (millisTill10 < 0) {
      millisTill10 += 86400000;
 }
@@ -191,7 +191,9 @@ function goToNext(){
                     else{
                         if(data.includes("Error") || data.includes("error")){
                             console.log("Returned Error")
-                            window.location.href = 'https://www.passport.gov.mm/user/booking';
+                            goToNext()
+                            nextCount++
+                            //window.location.href = 'https://www.passport.gov.mm/user/booking';
                         }
                         else{
                             window.location.href = 'https://www.passport.gov.mm/user/booking_info';
