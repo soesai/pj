@@ -163,8 +163,8 @@ function goToNext(){
                 type: 'POST',
                 url: 'https://www.passport.gov.mm/user/reserve',       
                 data: {  
-                    "appdate": appDate,
-                    "apptime": appTime,
+                    "appdate": getAppDate(),
+                    "apptime": getAppTime(),
                     "station": '16',
                     "no_of_booking": '1',
                     "ip_address": "37.19.205.19",
