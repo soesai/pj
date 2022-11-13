@@ -178,7 +178,10 @@ function goToNext(){
                     console.log(data)
                     localStorage.setItem("status_code", data)
         
-                    if(data == -1 || data == 0 || data == 1 || data == 2 || data == 3 || data == 4 || data == 5 || data == 6 || data == "wait" || data == "Wait"){
+                    if( data == 3 ){
+                        window.location.href = 'https://www.passport.gov.mm/user/booking';
+                    }
+                    if(data == -1 || data == 0 || data == 1 || data == 2 || data == 4 || data == 5 || data == 6 || data == "wait" || data == "Wait"){
                         console.log("Next Count - ", nextCount)
                         if(nextCount <= 40){
                             goToNext()
